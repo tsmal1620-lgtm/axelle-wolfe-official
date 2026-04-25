@@ -149,6 +149,36 @@
                   </div>
     </section>
 
+    <section id="booking" class="py-20 px-4 bg-zinc-900">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-6xl font-black mb-4">BOOKING</h2>
+            <p class="text-pink-500 font-bold tracking-widest uppercase">
+                <span class="lang-en">For bookings and inquiries</span>
+                <span class="lang-fr" style="display:none;">Pour réservations et informations</span>
+            </p>
+            <a href="https://www.instagram.com/axellewolfe" target="_blank" class="inline-flex items-center mt-6 text-yellow-400 hover:text-white transition-colors">
+                <span class="text-2xl mr-2">📸</span> @axellewolfe
+            </a>
+        </div>
+
+        <div class="bg-black p-8 md:p-12 rounded-3xl border border-white/10">
+            <form action="https://formspree.io/f/xwvazepz" method="POST" class="space-y-4">
+                <input name="name" required type="text" placeholder="Name / Nom" class="w-full bg-white/5 p-4 rounded-xl border border-white/10">
+                <input name="email" required type="email" placeholder="Email" class="w-full bg-white/5 p-4 rounded-xl border border-white/10">
+                <textarea name="message" placeholder="Event Details / Détails de l'événement" class="w-full bg-white/5 p-4 rounded-xl border border-white/10 h-32"></textarea>
+                <button type="submit" class="w-full bg-pink-500 py-4 font-black uppercase tracking-widest hover:bg-yellow-400 hover:text-black transition-colors">
+                    <span class="lang-en">Send Message</span>
+                    <span class="lang-fr" style="display:none;">Envoyer le message</span>
+                </button>
+            </form>
+            <p class="text-center mt-6 text-gray-500 text-sm">
+                Direct: <a href="mailto:axellewolfe@gmail.com" class="hover:text-pink-500">axellewolfe@gmail.com</a>
+            </p>
+        </div>
+    </div>
+</section>
+
     <div x-show="isBookingOpen" x-cloak class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6">
         <div class="bg-neutral-900 p-12 rounded-[2rem] border border-white/10 max-w-lg w-full relative">
             <button @click="isBookingOpen = false" class="absolute top-6 right-6"><i data-lucide="x"></i></button>
