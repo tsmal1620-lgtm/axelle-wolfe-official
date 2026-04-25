@@ -58,9 +58,17 @@
                     <a :href="'#' + ['home','about','media','shows','booking'][index]" class="text-sm font-bold tracking-widest hover:text-yellow-400 transition-colors uppercase" x-text="item"></a>
                 </template>
 
-               <button @click="lang = (lang === 'EN' ? 'FR' : 'EN')" class="border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black">
-    <span x-text="lang"></span>
-               </button>
+             <div class="flex items-center bg-white/10 rounded-full p-1 border border-white/10">
+                    <button @click="lang = 'EN'" 
+                            class="px-3 py-1 rounded-full text-xs font-bold uppercase transition-all"
+                            :class="lang === 'EN' ? 'bg-white text-black' : 'text-white/50 hover:text-white'">
+                        EN
+                    </button>
+                    <button @click="lang = 'FR'" 
+                            class="px-3 py-1 rounded-full text-xs font-bold uppercase transition-all"
+                            :class="lang === 'FR' ? 'bg-white text-black' : 'text-white/50 hover:text-white'">
+                        FR
+                    </button>
             </div>
         </div>
     </nav>
