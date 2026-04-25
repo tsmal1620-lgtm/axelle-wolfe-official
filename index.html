@@ -73,25 +73,26 @@
         </div>
     </section>
 
-   <section id="about" class="py-20 px-4 bg-black">
+ <section id="about" class="py-20 px-4 bg-black">
     <div class="max-w-4xl mx-auto">
         <h2 class="text-4xl md:text-6xl font-black mb-12 text-center">
             <span class="lang-en">BIO</span>
-            <span class="lang-fr" style="display:none;">BIO</span>
+            <span class="lang-fr">BIO</span>
         </h2>
+        
         <div class="space-y-8 text-lg md:text-xl leading-relaxed text-gray-300">
             <div class="lang-en">
                 <p>
-                    <span class="text--500 font-bold">Axelle Wolfe</span> is a rising powerhouse of the Quebec drag scene, known for high-octane performances and a polished, avant-garde aesthetic. Since exploding onto the stage in 2022, Axelle has quickly established herself as a consistent "one-to-watch."
+                    <span class="text-pink-500 font-bold">Axelle Wolfe</span> is a rising powerhouse of the Quebec drag scene, known for high-octane performances and a polished, avant-garde aesthetic. Since exploding onto the stage in 2022, Axelle has quickly established herself as a consistent "one-to-watch."
                 </p>
                 <p>
                     A fierce competitor with a reputation for precision, she was awarded <span class="text-yellow-400">Relève de l'Année</span> at the 2023 Gala Des Artistes after a stunning second-place finish in Dragwarts at Le Drague in Québec City. Her momentum continued across borders, tying for second in Guelph’s Next Drag Superstar (2025) and most recently claiming second place in the high-stakes Drague On (2026) at Le Drague Cabaret.
                 </p>
             </div>
 
-            <div class="lang-fr" style="display:none;">
+            <div class="lang-fr">
                 <p>
-                    <span class="text--500 font-bold">Axelle Wolfe</span> est une force montante de la scène drag québécoise, reconnue pour ses performances électrisantes et son esthétique avant-garde polie. Depuis ses débuts en 2022, Axelle s'est rapidement imposée comme une artiste incontournable.
+                    <span class="text-pink-500 font-bold">Axelle Wolfe</span> est une force montante de la scène drag québécoise, reconnue pour ses performances électrisantes et son esthétique avant-garde polie. Depuis ses débuts en 2022, Axelle s'est rapidement imposée comme une artiste incontournable.
                 </p>
                 <p>
                     Compétitrice féroce réputée pour sa précision, elle a remporté le prix <span class="text-yellow-400">Relève de l'Année</span> au Gala Des Artistes 2023 après avoir terminé deuxième à Dragwarts au Le Drague à Québec. Son élan s'est poursuivi au-delà des frontières, terminant deuxième à Guelph’s Next Drag Superstar (2025) et, plus récemment, décrochant la deuxième place au prestigieux concours Drague On (2026) au Cabaret Le Drague.
@@ -181,41 +182,38 @@
         <p class="text-xs font-bold opacity-30 tracking-[0.3em]">© 2026 AXELLE WOLFE | MADE IN QUÉBEC</p>
     </footer>
 
-    <script>
-        // 1. Initialize Icons
-        lucide.createIcons();
+  <script>
+    // 1. Initialize Icons
+    lucide.createIcons();
 
-        // 2. The Language Switcher Function
-        window.setLanguage = function(lang) {
-            // Find all elements with language classes
-            const enElements = document.querySelectorAll('.lang-en');
-            const frElements = document.querySelectorAll('.lang-fr');
+    // 2. The Language Switcher Function
+    window.setLanguage = function(lang) {
+        const enElements = document.querySelectorAll('.lang-en');
+        const frElements = document.querySelectorAll('.lang-fr');
 
-            if (lang === 'fr') {
-                // Show French, Hide English
-                enElements.forEach(el => el.style.display = 'none');
-                frElements.forEach(el => {
-                    // Use 'block' for paragraphs/divs, 'inline' for buttons/spans
-                    el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
-                });
-                document.documentElement.lang = 'fr';
-            } else {
-                // Show English, Hide French
-                enElements.forEach(el => {
-                    el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
-                });
-                frElements.forEach(el => el.style.display = 'none');
-                document.documentElement.lang = 'en';
-            }
-        };
-
-        // 3. Optional: Check for saved language preference on load
-        // This makes sure if they refresh the page, it stays in the language they picked
-        const savedLang = localStorage.getItem('preferredLang');
-        if (savedLang) {
-            setLanguage(savedLang);
+        if (lang === 'fr' || lang === 'FR') {
+            enElements.forEach(el => el.style.display = 'none');
+            frElements.forEach(el => {
+                el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
+            });
+            document.documentElement.lang = 'fr';
+        } else {
+            enElements.forEach(el => {
+                el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
+            });
+            frElements.forEach(el => el.style.display = 'none');
+            document.documentElement.lang = 'en';
         }
-    </script>
+    };
+
+    // 3. THE FIX: Run this immediately when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        // Look at the starting language set in your x-data (Alpine.js)
+        // If your x-data says lang: 'FR', this will hide the English bio immediately
+        const initialLang = document.querySelector('[x-data]').__x.$data.lang;
+        setLanguage(initialLang.toLowerCase());
+    });
+</script>
     
 </body>
 </html>
