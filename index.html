@@ -12,7 +12,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
+        /* This is the missing line that makes the language toggle work */
+        .hidden { display: none !important; }
+
         [x-cloak] { display: none !important; }
         html { scroll-behavior: smooth; }
         .bg-electric-yellow { background-color: #facc15; }
@@ -82,7 +86,7 @@
     <div class="max-w-4xl mx-auto">
         <h2 class="text-4xl md:text-6xl font-black mb-12 text-center">
             <span class="lang-en">BIO</span>
-            <span class="lang-fr">BIO</span>
+            <span class="lang-fr hidden">BIO</span>
         </h2>
         
         <div class="space-y-8 text-lg md:text-xl leading-relaxed text-gray-300">
@@ -95,7 +99,7 @@
                 </p>
             </div>
 
-            <div class="lang-fr">
+            <div class="lang-fr hidden">
                 <p>
                     <span class="text-pink-500 font-bold">Axelle Wolfe</span> est une force montante de la scène drag québécoise, reconnue pour ses performances électrisantes et son esthétique avant-garde polie. Depuis ses débuts en 2022, Axelle s'est rapidement imposée comme une artiste incontournable.
                 </p>
@@ -188,35 +192,33 @@
     </footer>
 
   <script>
-    // 1. Initialize Icons
+    // Initialize Icons
     lucide.createIcons();
 
-    // 2. The Language Switcher Function
+    // The Language Switcher
     window.setLanguage = function(lang) {
+        const targetLang = lang.toLowerCase();
         const enElements = document.querySelectorAll('.lang-en');
         const frElements = document.querySelectorAll('.lang-fr');
 
-        if (lang === 'fr' || lang === 'FR') {
-            enElements.forEach(el => el.style.display = 'none');
-            frElements.forEach(el => {
-                el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
-            });
+        if (targetLang === 'fr') {
+            enElements.forEach(el => el.classList.add('hidden'));
+            frElements.forEach(el => el.classList.remove('hidden'));
             document.documentElement.lang = 'fr';
         } else {
-            enElements.forEach(el => {
-                el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
-            });
-            frElements.forEach(el => el.style.display = 'none');
+            enElements.forEach(el => el.classList.remove('hidden'));
+            frElements.forEach(el => el.classList.add('hidden'));
             document.documentElement.lang = 'en';
         }
     };
 
-    // 3. THE FIX: Run this immediately when the page loads
+    // Fix for the initial load glitch
     document.addEventListener('DOMContentLoaded', () => {
-        // Look at the starting language set in your x-data (Alpine.js)
-        // If your x-data says lang: 'FR', this will hide the English bio immediately
-        const initialLang = document.querySelector('[x-data]').__x.$data.lang;
-        setLanguage(initialLang.toLowerCase());
+        // This looks at your Alpine.js 'lang' variable at the top
+        const alpineData = document.querySelector('[x-data]').__x.$data;
+        if (alpineData && alpineData.lang) {
+            setLanguage(alpineData.lang);
+        }
     });
 </script>
     
