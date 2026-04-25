@@ -52,9 +52,9 @@
                 <template x-for="(item, index) in content[lang].nav">
                     <a :href="'#' + ['home','about','media','shows','booking'][index]" class="text-sm font-bold tracking-widest hover:text-yellow-400 transition-colors uppercase" x-text="item"></a>
                 </template>
-                <button @click="lang = (lang === 'EN' ? 'FR' : 'EN')" class="border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black">
-                    <span x-text="lang"></span>
-                </button>
+              <button @click="lang = (lang === 'EN' ? 'FR' : 'EN'); setLanguage(lang.toLowerCase())" class="border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black">
+    <span x-text="lang"></span>
+               </button>
             </div>
         </div>
     </nav>
@@ -100,10 +100,12 @@
     </div>
 </section>
 
-    <section id="media" class="py-24 bg-neutral-950">
-        <div class="container mx-auto px-6">
-            <h2 class="text-6xl font-black italic mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 uppercase" x-text="content[lang].nav[2]"></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<section id="media" class="py-24 bg-neutral-950">
+    <div class="container mx-auto px-6">
+        <h2 class="text-6xl font-black italic mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 uppercase" x-text="content[lang].nav[2]"></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div> </div>
+</section>
                 <div class="overflow-hidden rounded-2xl border border-white/10 group cursor-pointer" @click="selectedMedia = 'RealPink.png'">
                     <img src="RealPink.png" class="w-full hover:scale-105 transition-transform duration-500" alt="Yellow Performance">
                 </div>
@@ -201,8 +203,40 @@
     </footer>
 
     <script>
-        // Initialize Lucide Icons
+        // 1. Initialize Icons
         lucide.createIcons();
+
+        // 2. The Language Switcher Function
+        window.setLanguage = function(lang) {
+            // Find all elements with language classes
+            const enElements = document.querySelectorAll('.lang-en');
+            const frElements = document.querySelectorAll('.lang-fr');
+
+            if (lang === 'fr') {
+                // Show French, Hide English
+                enElements.forEach(el => el.style.display = 'none');
+                frElements.forEach(el => {
+                    // Use 'block' for paragraphs/divs, 'inline' for buttons/spans
+                    el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
+                });
+                document.documentElement.lang = 'fr';
+            } else {
+                // Show English, Hide French
+                enElements.forEach(el => {
+                    el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
+                });
+                frElements.forEach(el => el.style.display = 'none');
+                document.documentElement.lang = 'en';
+            }
+        };
+
+        // 3. Optional: Check for saved language preference on load
+        // This makes sure if they refresh the page, it stays in the language they picked
+        const savedLang = localStorage.getItem('preferredLang');
+        if (savedLang) {
+            setLanguage(savedLang);
+        }
     </script>
+    
 </body>
 </html>
