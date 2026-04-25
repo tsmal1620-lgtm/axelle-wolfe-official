@@ -65,7 +65,7 @@
         </div>
         <div class="container mx-auto px-6 relative z-10 text-center">
             <h1 class="text-6xl md:text-9xl font-black italic tracking-tighter mb-4">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-white to-pink-500 uppercase" x-text="content[lang].hero.title"></span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-white to--500 uppercase" x-text="content[lang].hero.title"></span>
             </h1>
             <p class="text-xl md:text-3xl font-light tracking-wide max-w-2xl mx-auto mb-10" x-text="content[lang].hero.subtitle"></p>
             <button @click="isBookingOpen = true" class="px-10 py-4 bg-yellow-400 text-black font-black tracking-widest text-lg hover:bg-white transition-all shadow-lg" x-text="content[lang].hero.cta"></button>
@@ -95,11 +95,11 @@
         <div class="container mx-auto px-6">
             <h2 class="text-6xl font-black italic mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 uppercase" x-text="content[lang].nav[2]"></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="overflow-hidden rounded-2xl border border-white/10 group cursor-pointer" @click="selectedMedia = 'image-86.jpg'">
-                    <img src="image-86.jpg" class="w-full hover:scale-105 transition-transform duration-500" alt="Yellow Performance">
+                <div class="overflow-hidden rounded-2xl border border-white/10 group cursor-pointer" @click="selectedMedia = 'REALPINK.png'">
+                    <img src="REALPINK.png" class="w-full hover:scale-105 transition-transform duration-500" alt="Yellow Performance">
                 </div>
-                <div class="overflow-hidden rounded-2xl border border-white/10 group cursor-pointer" @click="selectedMedia = 'PinkNoBackground.jpg'">
-                    <img src="PinkNoBackground.jpg" class="w-full hover:scale-105 transition-transform duration-500" alt="Pink Studio">
+                <div class="overflow-hidden rounded-2xl border border-white/10 group cursor-pointer" @click="selectedMedia = 'AnimePink.png'">
+                    <img src="AnimePink.png" class="w-full hover:scale-105 transition-transform duration-500" alt="Pink Studio">
                 </div>
                 <div class="overflow-hidden rounded-2xl border border-white/10 group cursor-pointer" @click="selectedMedia = 'YellowWithBackground.jpg'">
                     <img src="YellowWithBackground.jpg" class="w-full hover:scale-105 transition-transform duration-500" alt="Yellow Studio">
