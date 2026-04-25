@@ -39,13 +39,26 @@
                 hero: { title: 'AXELLE WOLFE', subtitle: 'La Force de la Nature aux Multiples Visages.', cta: 'RÉSERVEZ MAINTENANT' },
                 about: { title: 'AXELLE WOLFE', bio: 'Née au cœur du Québec, Axelle Wolfe fusionne la maîtrise du maquillage et la chorégraphie survoltée. Son style \'Précision Électrique\' est une figure incontournable de la scène canadienne.' },
                 shows: { title: 'PROCHAINES DATES', subtitle: 'Vivez le choc électrique en direct.' },
-                booking: { title: 'PRÊT POUR L\'ÉLECTRIQUE?', button: 'OUVRIR LE FORMULAIRE' }
+                booking: { title: 'PRÊT POUR L\'ÉLECTRIQUE?', button: 'OUVRIR LE FORMULAIRE' } 
+            },
+            DE: {
+                nav: ['START', 'BIO', 'MEDIA', 'SHOWS', 'BUCHUNG'],
+                hero: { title: 'AXELLE WOLFE', subtitle: 'Die facettenreiche Naturgewalt.', cta: 'JETZT BUCHEN' },
+                about: { title: 'BIO' },
+                shows: { title: 'KOMMENDE TERMINE' },
+                booking: { 
+                    title: 'BUCHUNG', 
+                    subtitle: 'Für Buchungsanfragen und Informationen',
+                    formName: 'Name',
+                    formEmail: 'E-Mail',
+                    formDetails: 'Event-Details',
+                    formSend: 'Nachricht senden'
+                }
+              }
             }
-        }
-      }"
-
-      @scroll.window="scrolled = (window.pageYOffset > 50)">
-
+      }" @scroll.window="scrolled = (window.pageYOffset > 50)" :lang="lang.toLowerCase()">
+  
+    <!-- NAVIGATION -->
     <nav class="fixed w-full z-50 transition-all duration-300" :class="scrolled ? 'bg-black/90 backdrop-blur-md py-3' : 'bg-transparent py-6'">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" @click="window.scrollTo(0,0)">
@@ -68,11 +81,38 @@
                             class="px-3 py-1 rounded-full text-xs font-bold uppercase transition-all"
                             :class="lang === 'FR' ? 'bg-white text-black' : 'text-white/50 hover:text-white'">
                         FR
+                         </button>
+                    <button @click="lang = 'DE'" 
+                            class="px-3 py-1 rounded-full text-xs font-bold uppercase transition-all"
+                            :class="lang === 'DE' ? 'bg-white text-black' : 'text-white/50 hover:text-white'">
+                        DE
                     </button>
+            </div>
+        </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden" @click="isMenuOpen = !isMenuOpen">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+
+         <!-- Mobile Menu -->
+        <div x-show="isMenuOpen" x-cloak class="md:hidden bg-black border-b border-white/10 p-6 space-y-4">
+            <template x-for="(item, index) in content[lang].nav">
+                <a :href="'#' + ['home','about','media','shows','booking'][index]" 
+                   @click="isMenuOpen = false"
+                   class="block text-lg font-bold tracking-widest hover:text-yellow-400 uppercase" 
+                   x-text="item"></a>
+            </template>
+            <div class="flex gap-4 pt-4 border-t border-white/10">
+                <button @click="lang = 'EN'; isMenuOpen = false" class="text-sm font-bold" :class="lang === 'EN' ? 'text-yellow-400' : 'text-white/50'">EN</button>
+                <button @click="lang = 'FR'; isMenuOpen = false" class="text-sm font-bold" :class="lang === 'FR' ? 'text-yellow-400' : 'text-white/50'">FR</button>
+                <button @click="lang = 'DE'; isMenuOpen = false" class="text-sm font-bold" :class="lang === 'DE' ? 'text-yellow-400' : 'text-white/50'">DE</button>
             </div>
         </div>
     </nav>
 
+    <!-- HERO SECTION -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
         <div class="absolute inset-0 opacity-40">
             <img src="YellowWithBackground.jpg" class="w-full h-full object-cover grayscale-[20%] brightness-50" alt="Axelle Wolfe Hero">
@@ -86,6 +126,7 @@
         </div>
     </section>
 
+<!-- BIO SECTION -->
  <section id="about" class="py-24 px-4 bg-black border-y border-white/5">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-5xl md:text-7xl font-black mb-16 text-center italic tracking-tighter" x-text="content[lang].about.title"></h2>
@@ -116,10 +157,24 @@
                         While based in Québec City as a regular performer at Le Drague Cabaret, Axelle is a frequent guest on stages across Ontario and Québec. She performs regularly with Sasha Tease Events and DollHaus in Kitchener-Waterloo and Guelph. Axelle has performed alongside Lady Boom Boom, Adriana The Bombshell, Karamilk and Sasha Baga.
                     </p>
                 </div>
+
+                <!-- German Bio -->
+                <div x-show="lang === 'DE'" x-transition>
+                    <p class="mb-6">
+                        <span class="text-pink-500 font-bold">Axelle Wolfe</span> ist eine aufstrebende Größe in der Drag-Szene von Québec, bekannt für ihre elektrisierenden Performances und ihre makellose, avantgardistische Ästhetik. Seit ihrem Debüt im Jahr 2022 hat sich Axelle schnell als Künstlerin etabliert, die man im Auge behalten muss.
+                    </p>
+                    <p class="mb-6">
+                        Als leidenschaftliche Performerin, die für ihre Präzision geschätzt wird, gewann sie beim Gala Des Artistes 2023 den Preis als <span class="text-yellow-400">Newcomerin des Jahres</span>, nachdem sie bei Dragwarts im Le Drague in Québec den zweiten Platz belegt hatte. Ihr Erfolg setzte sich international fort, mit einem zweiten Platz bei Guelph’s Next Drag Superstar (2025) und dem zweiten Platz beim renommierten Drague On Wettbewerb (2026).
+                    </p>
+                    <p>
+                        Axelle lebt in Québec City und tritt regelmäßig im Cabaret Le Drague auf, ist jedoch in ganz Québec und Ontario unterwegs. Man sieht sie oft bei Veranstaltungen von Sasha Tease Events oder im DollHaus (Kitchener-Waterloo/Guelph). Sie stand bereits mit Lady Boom Boom, Adriana The Bombshell, Karamilk und Sasha Baga auf der Bühne.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- MEDIA SECTION -->
     <section id="media" class="py-24 bg-neutral-950">
         <div class="container mx-auto px-6">
             <h2 class="text-6xl font-black italic mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 uppercase" x-text="content[lang].nav[2]"></h2>
@@ -276,41 +331,32 @@
     </footer>
   
     <script>
-
-        // 1. Initialize Icons
+        // 1. Initialize Lucide Icons
         lucide.createIcons();
-        // 2. The Language Switcher Function
-        window.setLanguage = function(lang) {
-            // Find all elements with language classes
-            const enElements = document.querySelectorAll('.lang-en');
-            const frElements = document.querySelectorAll('.lang-fr');
+        
+        // 2. Modern Language Support (Alpine.js Integrated)
+        // Instead of manual DOM manipulation, we use Alpine's reactive effects.
+        document.addEventListener('alpine:initialized', () => {
+            // This effect runs every time 'lang' changes
+            Alpine.effect(() => {
+                const currentLang = Alpine.store('lang') || 'FR'; // Fallback
+                
+                // Refresh icons in case new text nodes were added
+                lucide.createIcons();
+                
+                // Save preference to localStorage automatically
+                localStorage.setItem('preferredLang', currentLang);
+            });
+        });
 
-            if (lang === 'fr') {
-                // Show French, Hide English
-                enElements.forEach(el => el.style.display = 'none');
-                frElements.forEach(el => {
-                    // Use 'block' for paragraphs/divs, 'inline' for buttons/spans
-                    el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
-                });
-                document.documentElement.lang = 'fr';
-            } else {
-                // Show English, Hide French
-                enElements.forEach(el => {
-                    el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
-                });
-                frElements.forEach(el => el.style.display = 'none');
-                document.documentElement.lang = 'en';
-            }
-        };
-
-        // 3. Optional: Check for saved language preference on load
-        // This makes sure if they refresh the page, it stays in the language they picked
-        const savedLang = localStorage.getItem('preferredLang');
-        if (savedLang) {
-            setLanguage(savedLang);
-
-        }
+        // 3. Optional: Initial language load from storage
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('preferredLang');
+            // We can access the Alpine component data through the __x property if needed, 
+            // but the UI buttons are already wired to Alpine's 'lang' variable.
+        });
     </script>
+
 
 </body>
 
