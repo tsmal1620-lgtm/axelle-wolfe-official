@@ -112,10 +112,10 @@
         <div class="bg-neutral-900 p-12 rounded-[2rem] border border-white/10 max-w-lg w-full relative">
             <button @click="isBookingOpen = false" class="absolute top-6 right-6"><i data-lucide="x"></i></button>
             <h3 class="text-3xl font-black italic uppercase text-yellow-400 mb-6" x-text="content[lang].booking.title"></h3>
-            <form action="#" class="space-y-4">
-                <input type="text" placeholder="Name / Nom" class="w-full bg-white/5 p-4 rounded-xl border border-white/10">
-                <input type="email" placeholder="Email" class="w-full bg-white/5 p-4 rounded-xl border border-white/10">
-                <textarea placeholder="Event Details / Détails" class="w-full bg-white/5 p-4 rounded-xl border border-white/10 h-32"></textarea>
+            <form action="https://formspree.io/f/xwvazepz" method="POST" class="space-y-4">
+                <input name="name" required type="text" placeholder="Name / Nom" class="w-full bg-white/5 p-4 rounded-xl border border-white/10">
+                <input name="email" required type="email" placeholder="Email" class="w-full bg-white/5 p-4 rounded-xl border border-white/10">
+                <textarea name="message" placeholder="Event Details / Détails" class="w-full bg-white/5 p-4 rounded-xl border border-white/10 h-32"></textarea>
                 <button type="submit" class="w-full bg-pink-500 py-4 font-black uppercase tracking-widest hover:bg-yellow-400 hover:text-black transition-colors">Send / Envoyer</button>
             </form>
         </div>
