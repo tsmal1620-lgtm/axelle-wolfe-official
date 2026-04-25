@@ -52,9 +52,10 @@
                 <template x-for="(item, index) in content[lang].nav">
                     <a :href="'#' + ['home','about','media','shows','booking'][index]" class="text-sm font-bold tracking-widest hover:text-yellow-400 transition-colors uppercase" x-text="item"></a>
                 </template>
-              <button @click="lang = (lang === 'EN' ? 'FR' : 'EN'); setLanguage(lang.toLowerCase())" class="border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black">
-    <span x-text="lang"></span>
-               </button>
+             <button @click="lang = (lang === 'EN' ? 'FR' : 'EN'); setLanguage(lang.toLowerCase())" 
+        class="border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black transition-colors">
+    <span x-text="lang === 'EN' ? 'FR' : 'EN'"></span>
+              </button>
             </div>
         </div>
     </nav>
