@@ -192,32 +192,38 @@
     </footer>
 
   <script>
-    // Initialize Icons
+    // 1. Initialize Icons
     lucide.createIcons();
 
-    // The Language Switcher
+    // 2. The Master Language Function
     window.setLanguage = function(lang) {
-        const targetLang = lang.toLowerCase();
+        // Find all language elements
         const enElements = document.querySelectorAll('.lang-en');
         const frElements = document.querySelectorAll('.lang-fr');
 
-        if (targetLang === 'fr') {
+        if (lang.toLowerCase() === 'fr') {
+            // Show French, Hide English
             enElements.forEach(el => el.classList.add('hidden'));
             frElements.forEach(el => el.classList.remove('hidden'));
             document.documentElement.lang = 'fr';
         } else {
+            // Show English, Hide French
             enElements.forEach(el => el.classList.remove('hidden'));
             frElements.forEach(el => el.classList.add('hidden'));
             document.documentElement.lang = 'en';
         }
     };
 
-    // Fix for the initial load glitch
-    document.addEventListener('DOMContentLoaded', () => {
-        // This looks at your Alpine.js 'lang' variable at the top
-        const alpineData = document.querySelector('[x-data]').__x.$data;
-        if (alpineData && alpineData.lang) {
-            setLanguage(alpineData.lang);
+    // 3. The Startup Script
+    // We will wait 100ms to make sure the page is fully loaded before switching
+    window.addEventListener('load', () => {
+        // Check what the 'lang' variable is currently set to in your x-data
+        // If your x-data says 'FR', we run the French setup immediately
+        const siteData = document.querySelector('[x-data]');
+        if (siteData) {
+            // This pulls the current language directly from your website's data
+            const initialLang = Alpine.store ? Alpine.store('lang') : 'FR'; 
+            setLanguage(initialLang);
         }
     });
 </script>
