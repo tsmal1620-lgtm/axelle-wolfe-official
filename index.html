@@ -199,10 +199,31 @@
     <div x-show="selectedMedia" x-cloak class="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4" @click="selectedMedia = null">
         <img :src="selectedMedia" class="max-h-[90vh] max-w-full rounded-lg shadow-2xl">
     </div>
+      </div>
+    </div>
+</section>
+    <section id="shows" class="py-20 bg-neutral-950">
+    <div class="container mx-auto px-6 text-center">
+
+        <h2 class="text-5xl font-black mb-10 uppercase"
+            x-text="content[lang].nav[3]"></h2>
+
+        <div class="rounded-2xl overflow-hidden border border-white/10">
+            <iframe 
+                src="https://calendar.google.com/calendar/embed?src=d58d535c23f8cb4469d70bae6bed31e53b7e40ce2a4b1cb85c99ba492a334b97@group.calendar.google.com&ctz=America%2FToronto"
+                style="border: 0"
+                width="100%"
+                height="600"
+                frameborder="0"
+                scrolling="no">
+            </iframe>
+        </div>
+    </div>
+</section>
     <footer class="py-12 border-t border-white/5 text-center">
         <p class="text-xs font-bold opacity-30 tracking-[0.3em]">© 2026 AXELLE WOLFE | MADE IN QUÉBEC</p>
     </footer>
-
+  
     <script>
 
         // 1. Initialize Icons
