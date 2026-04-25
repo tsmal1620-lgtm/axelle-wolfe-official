@@ -58,9 +58,9 @@
                     <a :href="'#' + ['home','about','media','shows','booking'][index]" class="text-sm font-bold tracking-widest hover:text-yellow-400 transition-colors uppercase" x-text="item"></a>
                 </template>
 
-                <button onclick="setLanguage(lang === 'EN' ? 'fr' : 'en'); lang = (lang === 'EN' ? 'FR' : 'EN')" class="border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black">
-    <span id="langToggle">FR</span>
-</button>
+               <button @click="lang = (lang === 'EN' ? 'FR' : 'EN')" class="border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black">
+    <span x-text="lang"></span>
+               </button>
             </div>
         </div>
     </nav>
