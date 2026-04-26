@@ -113,18 +113,36 @@
 
     <div id="cursor" x-ref="cursor" class="hidden lg:block"></div>
 
-    <!-- AUDIO TOGGLE -->
-    <div class="fixed bottom-8 left-8 z-[60] flex items-center gap-3">
-        <button @click="isMuted = !isMuted" class="w-12 h-12 glass rounded-full flex items-center justify-center text-pink-500 hover:scale-110 transition-all border border-pink-500/30">
-            <template x-if="!isMuted">
-                <div class="flex items-end h-4 gap-0.5">
-                    <span class="wave"></span><span class="wave"></span><span class="wave"></span>
-                </div>
-            </template>
-            <template x-if="isMuted">
-                <i data-lucide="volume-x" class="w-5 h-5"></i>
-            </template>
-        </button>
+   <!-- Audio element using your direct Suno link -->
+        <audio x-ref="bgAudio" loop preload="auto">
+            <source src="https://cdn1.suno.ai/fTfMpt7N7mHe2PxO.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio> 
+
+        <!-- AUDIO TOGGLE -->
+        <div class="fixed bottom-8 left-8 z-[60] flex items-center gap-3">
+            <button @click="isMuted = !isMuted" 
+                    class="w-12 h-12 glass rounded-full flex items-center justify-center text-pink-500 hover:scale-110 transition-all border border-pink-500/30 shadow-xl">
+                
+                <template x-if="!isMuted">
+                    <div class="flex items-end h-4 gap-0.5">
+                        <span class="wave"></span>
+                        <span class="wave"></span>
+                        <span class="wave"></span>
+                    </div>
+                </template>
+                
+                <template x-if="isMuted">
+                    <i data-lucide="volume-x" class="w-5 h-5"></i>
+                </template>
+            </button>
+            
+            <!-- Label to show status -->
+            <div x-show="!isMuted" x-transition class="flex flex-col">
+                <span class="text-pink-500 text-[10px] font-bold uppercase tracking-[0.2em]">Playing</span>
+                <span class="text-white/40 text-[9px] truncate w-24">Suno AI Track</span>
+            </div>
+        </div>
     </div>
 
     <!-- NAVIGATION -->
