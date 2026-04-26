@@ -211,6 +211,44 @@
         </div>
     </section>
 
+     <!-- REPERTOIRE SECTION -->
+    <section class="py-24 bg-neutral-950 border-b border-white/5 reveal">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-black italic tracking-tighter uppercase mb-4" x-text="content[lang].repertoire.title"></h2>
+                <p class="text-pink-500 font-bold tracking-widest text-xs uppercase" x-text="content[lang].repertoire.subtitle"></p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Artists List -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold tracking-widest text-yellow-400 flex items-center gap-3">
+                        <i data-lucide="music"></i> 
+                        <span x-text="lang === 'FR' ? 'ARTISTES CLÉS' : (lang === 'DE' ? 'KEY ARTISTS' : 'KEY ARTISTS')"></span>
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <template x-for="artist in ['Lady Gaga','ABBA', 'Sabrina Carpenter', 'Kim Petras', 'Chappell Roan','Céline Dion',  'Doja Cat', 'Diana Ross', 'Kylie Minogue', 'Marjo', 'BLACKPINK', 'JADE',  'Ava Max']">
+                            <span class="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm font-bold hover:bg-pink-500/20 hover:border-pink-500/50 transition-all cursor-default" x-text="artist"></span>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Performance Styles -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold tracking-widest text-yellow-400 flex items-center gap-3">
+                        <i data-lucide="sparkles"></i>
+                        <span x-text="lang === 'FR' ? 'STYLES DE PERFORMANCE' : (lang === 'DE' ? 'PERFORMANCE-STILE' : 'PERFORMANCE STYLES')"></span>
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <template x-for="style in (lang === 'FR' ? ['Pop Électrique', 'Mode Avant-Garde', 'Burlesque Moderne', 'Haute Précision', 'Conceptuel'] : (lang === 'DE' ? ['Electric Pop', 'Avantgarde-Mode', 'Modernes Burlesque', 'Hochpräzise', 'Konzeptionell'] : ['Electric Pop', 'Avant-Garde Fashion', 'Modern Burlesque', 'High Precision', 'Conceptual']))">
+                            <span class="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm font-bold hover:bg-yellow-400/20 hover:border-yellow-400/50 transition-all cursor-default" x-text="style"></span>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- MEDIA SECTION -->
     <section id="media" class="py-32 bg-black">
         <div class="container mx-auto px-6 text-center">
