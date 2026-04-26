@@ -142,6 +142,45 @@
         </div>
     </nav>
 
+    <!-- MOBILE MENU -->
+<div x-show="isMenuOpen" x-transition 
+     class="md:hidden fixed top-0 left-0 w-full h-full bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-xl">
+
+    <!-- Navigation -->
+    <template x-for="(item, index) in content[lang].nav">
+        <a @click="isMenuOpen = false"
+           :href="'#' + ['home','about','media','shows','booking'][index]"
+           class="uppercase tracking-widest"
+           x-text="item">
+        </a>
+    </template>
+
+  <!-- MOBILE MENU -->
+<div x-show="isMenuOpen" x-transition 
+     class="md:hidden fixed top-0 left-0 w-full h-full bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-xl">
+
+    <!-- Navigation -->
+    <template x-for="(item, index) in content[lang].nav">
+        <a @click="isMenuOpen = false"
+           :href="'#' + ['home','about','media','shows','booking'][index]"
+           class="uppercase tracking-widest"
+           x-text="item">
+        </a>
+    </template>
+
+    <!-- Language Switcher -->
+    <div class="flex gap-4 mt-8">
+        <button @click="lang = 'EN'" class="px-4 py-2 border">EN</button>
+        <button @click="lang = 'FR'" class="px-4 py-2 border">FR</button>
+        <button @click="lang = 'DE'" class="px-4 py-2 border">DE</button>
+    </div>
+
+    <!-- Close button -->
+    <button @click="isMenuOpen = false" class="absolute top-6 right-6 text-pink-500">
+        ✕
+    </button>
+</div>
+
     <!-- HERO SECTION -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
         <div class="absolute inset-0">
