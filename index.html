@@ -69,18 +69,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Axelle Wolfe | Official Site</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@1,700&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Space+Grotesk:wght@300;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         [x-cloak] { display: none !important; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Space Grotesk', sans-serif; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
         .font-cursive { font-family: 'Dancing Script', cursive; }
         
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .pink-to-yellow-text {
+            background: linear-gradient(to right, #ec4899, #facc15);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
         @media (min-width: 1024px) {
             #cursor {
@@ -92,11 +99,8 @@
         }
         
         .blob { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; pointer-events: none; opacity: 0.15; }
-        .pink-glow { text-shadow: 0 0 15px rgba(236, 72, 153, 0.6); }
-
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(236, 72, 153, 0.1); }
         
-        /* Audio Waves Animation */
         .wave { display: inline-block; width: 3px; height: 10px; background: #ec4899; margin: 0 1px; animation: wave 1s infinite alternate; }
         .wave:nth-child(2) { animation-delay: 0.2s; }
         .wave:nth-child(3) { animation-delay: 0.4s; }
@@ -104,7 +108,7 @@
     </style>
 </head>
 
-<body class="bg-neutral-950 text-white selection:bg-pink-500 selection:text-white overflow-x-hidden" 
+<body class="text-white selection:bg-pink-500 selection:text-white overflow-x-hidden" 
       @mousemove="if(window.innerWidth > 1024) { $refs.cursor.style.left = $event.clientX + 'px'; $refs.cursor.style.top = $event.clientY + 'px'; }">
 
     <div id="cursor" x-ref="cursor" class="hidden lg:block"></div>
@@ -121,31 +125,19 @@
                 <i data-lucide="volume-x" class="w-5 h-5"></i>
             </template>
         </button>
-        <span x-show="!isMuted" x-cloak class="text-[10px] font-bold tracking-widest text-pink-400 bg-black/50 px-2 py-1 rounded">ON AIR</span>
     </div>
-
-    <!-- BACK TO TOP -->
-    <button x-show="scrolled" x-transition @click="window.scrollTo(0,0)" 
-            class="fixed bottom-8 right-8 z-[60] w-12 h-12 glass rounded-full flex items-center justify-center text-yellow-400 hover:text-pink-500 hover:scale-110 transition-all border border-yellow-400/20">
-        <i data-lucide="arrow-up" class="w-6 h-6"></i>
-    </button>
-
-    <!-- BACKGROUND BLOBS -->
-    <div class="blob bg-pink-600 w-[500px] h-[500px] top-20 -left-20 animate-pulse"></div>
-    <div class="blob bg-yellow-500 w-[500px] h-[500px] bottom-40 -right-20 opacity-10"></div>
 
     <!-- NAVIGATION -->
     <nav class="fixed w-full z-50 transition-all duration-300" :class="scrolled ? 'bg-black/90 backdrop-blur-md py-3 border-b border-pink-500/20' : 'bg-transparent py-6'">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer group" @click="window.scrollTo(0,0)">
-                <div class="text-pink-500 group-hover:scale-110 transition-transform group-hover:text-yellow-400"><i data-lucide="zap"></i></div>
-                <span class="text-2xl font-black tracking-tighter italic group-hover:text-pink-500 transition-colors uppercase">AXELLE WOLFE</span>
+                <span class="text-2xl font-black tracking-tighter italic uppercase pink-to-yellow-text">AXELLE WOLFE</span>
             </div>
             
             <div class="hidden md:flex items-center gap-8">
                 <template x-for="(item, index) in content[lang].nav">
                     <a :href="'#' + ['home','about','media','shows','booking'][index]" 
-                       class="text-xs font-bold tracking-widest hover:text-pink-500 transition-colors uppercase relative group/nav" 
+                       class="text-[10px] font-bold tracking-[0.3em] hover:text-pink-500 transition-colors uppercase relative group/nav" 
                        x-text="item">
                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-400 transition-all group-hover/nav:w-full"></span>
                     </a>
@@ -162,123 +154,89 @@
                 <i data-lucide="menu"></i>
             </button>
         </div>
-
-        <!-- Mobile Menu -->
-        <div x-show="isMenuOpen" x-cloak 
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 -translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="md:hidden bg-black/95 backdrop-blur-xl border-b border-pink-500/20 p-8 space-y-6 text-center">
-            <template x-for="(item, index) in content[lang].nav">
-                <a :href="'#' + ['home','about','media','shows','booking'][index]" 
-                   @click="isMenuOpen = false"
-                   class="block text-2xl font-black tracking-widest hover:text-pink-500 uppercase" 
-                   x-text="item"></a>
-            </template>
-        </div>
     </nav>
 
     <!-- HERO SECTION -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
         <div class="absolute inset-0">
-            <img src="YellowWithBackground.jpg" class="w-full h-full object-cover grayscale-[20%] brightness-[45%] scale-105 animate-[pulse_8s_infinite]" alt="Axelle Wolfe Hero">
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-pink-900/10 to-transparent"></div>
+            <img src="YellowWithBackground.jpg" class="w-full h-full object-cover grayscale-[20%] brightness-[40%] scale-105" alt="Axelle Wolfe Hero">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent"></div>
         </div>
         <div class="container mx-auto px-6 relative z-10 text-center">
-            <h1 class="text-6xl md:text-[10rem] font-black italic tracking-tighter mb-4 leading-none">
-                <span class="text-transparent bg-clip-text bg-gradient-to-br from-pink-400 via-white to-yellow-400 uppercase drop-shadow-[0_0_30px_rgba(236,72,153,0.3)]" x-text="content[lang].hero.title"></span>
-            </h1>
-            <p class="text-xl md:text-3xl font-light tracking-[0.2em] max-w-3xl mx-auto mb-12 opacity-90 text-pink-100 uppercase" x-text="content[lang].hero.subtitle"></p>
-            <button @click="isBookingOpen = true" 
-                    class="group relative px-12 py-5 bg-pink-600 text-white font-black tracking-widest text-lg transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(236,72,153,0.3)]">
-                <span class="relative z-10" x-text="content[lang].hero.cta"></span>
-                <div class="absolute inset-0 bg-yellow-400 translate-x-2 translate-y-2 -z-10 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></div>
-            </button>
-        </div>
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
-            <span class="text-[10px] font-black tracking-[0.4em] uppercase">Scroll</span>
-            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            <h1 class="text-5xl md:text-8xl lg:text-9xl font-black italic tracking-tighter mb-6 leading-none inline-block pink-to-yellow-text drop-shadow-[0_0_30px_rgba(236,72,153,0.3)]" x-text="content[lang].hero.title"></h1>
+            <p class="text-lg md:text-2xl font-light tracking-[0.3em] max-w-3xl mx-auto mb-12 opacity-80 text-pink-100 uppercase" x-text="content[lang].hero.subtitle"></p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <button @click="isBookingOpen = true" 
+                        class="group relative px-12 py-5 bg-pink-600 text-white font-black tracking-widest text-lg transition-all hover:scale-105 shadow-[0_0_40px_rgba(236,72,153,0.3)]">
+                    <span class="relative z-10" x-text="content[lang].hero.cta"></span>
+                    <div class="absolute inset-0 bg-yellow-400 translate-x-2 translate-y-2 -z-10 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></div>
+                </button>
+            </div>
         </div>
     </section>
 
     <!-- STATS BAR -->
-    <div class="bg-pink-600 py-12 relative z-20 overflow-hidden">
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+    <div class="bg-pink-600 py-10 relative z-20 border-y border-white/10">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div class="reveal">
-                <div class="text-5xl font-black italic tracking-tighter mb-2">69+</div>
-                <div class="text-xs font-black uppercase tracking-[0.3em] opacity-80" x-text="content[lang].stats.performances"></div>
+                <div class="text-4xl font-black italic tracking-tighter mb-1">69+</div>
+                <div class="text-[10px] font-black uppercase tracking-[0.3em] opacity-80" x-text="content[lang].stats.performances"></div>
             </div>
             <div class="reveal" style="transition-delay: 100ms">
-                <div class="text-5xl font-black italic tracking-tighter mb-2">6</div>
-                <div class="text-xs font-black uppercase tracking-[0.3em] opacity-80" x-text="content[lang].stats.cities"></div>
+                <div class="text-4xl font-black italic tracking-tighter mb-1">6</div>
+                <div class="text-[10px] font-black uppercase tracking-[0.3em] opacity-80" x-text="content[lang].stats.cities"></div>
             </div>
             <div class="reveal" style="transition-delay: 200ms">
-                <div class="text-5xl font-black italic tracking-tighter mb-2">67+</div>
-                <div class="text-xs font-black uppercase tracking-[0.3em] opacity-80" x-text="content[lang].stats.costumes"></div>
+                <div class="text-4xl font-black italic tracking-tighter mb-1">67+</div>
+                <div class="text-[10px] font-black uppercase tracking-[0.3em] opacity-80" x-text="content[lang].stats.costumes"></div>
             </div>
         </div>
     </div>
 
     <!-- BIO SECTION -->
-    <section id="about" class="py-32 px-4 bg-black reveal">
-        <div class="max-w-4xl mx-auto text-center md:text-left">
-            <h2 class="text-6xl md:text-8xl mb-16 text-center font-cursive pink-glow text-white" x-text="content[lang].about.title"></h2>
+    <section id="about" class="py-24 px-4 bg-black border-y border-white/5 reveal">
+        <div class="max-w-4xl mx-auto">
+            <!-- Cursive Invited Title -->
+            <h2 class="text-6xl md:text-8xl font-cursive mb-12 text-center text-pink-500 drop-shadow-sm" x-text="content[lang].about.title"></h2>
             
-            <div class="space-y-8 text-lg md:text-xl leading-relaxed text-pink-50/80">
+            <div class="space-y-8 text-lg md:text-xl leading-relaxed text-gray-300">
+                <!-- French Bio -->
                 <div x-show="lang === 'FR'" x-transition>
-                    <p class="mb-6"><span class="text-pink-500 font-bold border-b-2 border-yellow-400">Axelle Wolfe</span> est une force montante de la scène drag québécoise, reconnue pour ses performances électrisantes et son esthétique avant-garde polie.</p>
-                    <p>Compétitrice féroce réputée pour sa précision, elle a remporté le prix <span class="text-yellow-400 font-bold">Relève de l'Année</span> au Gala Des Artistes 2023. Basée à Québec, elle se déplace partout au Québec et en Ontario.</p>
+                    <p class="mb-6">
+                        <span class="text-pink-500 font-bold">Axelle Wolfe</span> est une force montante de la scène drag québécoise, reconnue pour ses performances électrisantes et son esthétique avant-garde polie. Depuis ses débuts en 2022, Axelle s'est rapidement imposée comme une artiste incontournable.
+                    </p>
+                    <p class="mb-6">
+                        Compétitrice féroce réputée pour sa précision, elle a remporté le prix <span class="text-yellow-400 font-bold">Relève de l'Année</span> au Gala Des Artistes 2023 après avoir terminé deuxième à Dragwarts au Le Drague à Québec. Son élan s'est poursuivi au-delà des frontières, terminant deuxième à Guelph’s Next Drag Superstar (2025) et décrochant la deuxième place au prestigieux concours Drague On (2026).
+                    </p>
+                    <p>
+                        Basée à Québec et habituée de la scène du Cabaret Le Drague, Axelle se déplace partout au Québec et en Ontario. On la retrouve souvent avec Sasha Tease Events, ou encore au DollHaus (Kitchener-Waterloo/Guelph). Elle a partagé la scène avec Lady Boom Boom, Adriana The Bombshell, Karamilk et Sasha Baga.
+                    </p>
                 </div>
+
+                <!-- English Bio -->
                 <div x-show="lang === 'EN'" x-transition>
-                    <p class="mb-6"><span class="text-pink-500 font-bold border-b-2 border-yellow-400">Axelle Wolfe</span> is a rising powerhouse of the Quebec drag scene, known for high-octane performances and a polished, avant-garde aesthetic.</p>
-                    <p>A fierce competitor with a reputation for precision, she was awarded <span class="text-yellow-400 font-bold">Newcomer of the Year</span> at the 2023 Gala Des Artistes. Based in Québec City, Axelle performs across Ontario and Québec.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- REPERTOIRE SECTION -->
-    <section class="py-32 bg-neutral-950 border-y border-pink-500/10 reveal relative">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-24">
-                <h2 class="text-4xl md:text-6xl font-black italic tracking-tighter uppercase mb-4 pink-glow" x-text="content[lang].repertoire.title"></h2>
-                <p class="text-yellow-400 font-bold tracking-widest text-xs uppercase" x-text="content[lang].repertoire.subtitle"></p>
-            </div>
-            
-            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div class="space-y-6">
-                    <h3 class="text-xl font-black tracking-widest text-pink-500 flex items-center gap-3 uppercase">
-                        <i data-lucide="music" class="text-yellow-400"></i> Artistes
-                    </h3>
-                    <div class="flex flex-wrap gap-4">
-                        <template x-for="artist in ['Lady Gaga', 'Céline Dion', 'Kim Petras', 'Doja Cat', 'Madonna', 'Kylie Minogue', 'BLACKPINK', 'Marjo', 'Diana Ross', 'Beyoncé']">
-                            <span class="px-6 py-4 glass rounded-2xl text-sm font-bold hover:bg-pink-600 transition-all cursor-default" x-text="artist"></span>
-                        </template>
-                    </div>
+                    <p class="mb-6">
+                        <span class="text-pink-500 font-bold">Axelle Wolfe</span> is a rising powerhouse of the Quebec drag scene, known for high-octane performances and a polished, avant-garde aesthetic. Since exploding onto the stage in 2022, Axelle has quickly established herself as a consistent "one-to-watch."
+                    </p>
+                    <p class="mb-6">
+                        A fierce competitor with a reputation for precision, she was awarded <span class="text-yellow-400 font-bold">Relève de l'Année</span> at the 2023 Gala Des Artistes after a stunning second-place finish in Dragwarts at Le Drague Cabaret. Her momentum continued across borders, tying for second in Guelph’s Next Drag Superstar (2025) and claiming second place in the high-stakes Drague On (2026).
+                    </p>
+                    <p>
+                        While based in Québec City as a regular performer at Le Drague Cabaret, Axelle is a frequent guest on stages across Ontario and Québec. She performs regularly with Sasha Tease Events and DollHaus in Kitchener-Waterloo and Guelph. Axelle has performed alongside Lady Boom Boom, Adriana The Bombshell, Karamilk and Sasha Baga.
+                    </p>
                 </div>
 
-                <!-- FAQ Integration -->
-                <div class="space-y-6">
-                    <h3 class="text-xl font-black tracking-widest text-pink-500 flex items-center gap-3 uppercase">
-                        <i data-lucide="help-circle" class="text-yellow-400"></i> FAQ
-                    </h3>
-                    <div class="space-y-4" x-data="{ active: 0 }">
-                        <div class="glass rounded-2xl overflow-hidden">
-                            <button @click="active = active === 1 ? 0 : 1" class="w-full px-6 py-4 flex justify-between items-center text-left hover:bg-white/5 transition-colors">
-                                <span class="font-bold text-sm" x-text="content[lang].faq.q1"></span>
-                                <i data-lucide="plus" class="w-4 h-4 transition-transform" :class="active === 1 ? 'rotate-45' : ''"></i>
-                            </button>
-                            <div x-show="active === 1" x-collapse class="px-6 pb-4 text-sm text-white/60" x-text="content[lang].faq.a1"></div>
-                        </div>
-                        <div class="glass rounded-2xl overflow-hidden">
-                            <button @click="active = active === 2 ? 0 : 2" class="w-full px-6 py-4 flex justify-between items-center text-left hover:bg-white/5 transition-colors">
-                                <span class="font-bold text-sm" x-text="content[lang].faq.q2"></span>
-                                <i data-lucide="plus" class="w-4 h-4 transition-transform" :class="active === 2 ? 'rotate-45' : ''"></i>
-                            </button>
-                            <div x-show="active === 2" x-collapse class="px-6 pb-4 text-sm text-white/60" x-text="content[lang].faq.a2"></div>
-                        </div>
-                    </div>
+                <!-- German Bio -->
+                <div x-show="lang === 'DE'" x-transition>
+                    <p class="mb-6">
+                        <span class="text-pink-500 font-bold">Axelle Wolfe</span> ist eine aufstrebende Größe in der Drag-Szene von Québec, bekannt für ihre elektrisierenden Performances und ihre makellose, avantgardistische Ästhetik. Seit ihrem Debüt im Jahr 2022 hat sich Axelle schnell als Künstlerin etabliert, die man im Auge behalten muss.
+                    </p>
+                    <p class="mb-6">
+                        Als leidenschaftliche Performerin, die für ihre Präzision geschätzt wird, gewann sie beim Gala Des Artistes 2023 den Preis als <span class="text-yellow-400 font-bold">Newcomerin des Jahres</span>, nachdem sie bei Dragwarts im Le Drague in Québec den zweiten Platz belegt hatte. Ihr Erfolg setzte sich international fort, mit einem zweiten Platz bei Guelph’s Next Drag Superstar (2025) und dem zweiten Platz beim renommierten Drague On Wettbewerb (2026).
+                    </p>
+                    <p>
+                        Axelle lebt in Québec City und tritt regelmäßig im Cabaret Le Drague auf, ist jedoch in ganz Québec und Ontario unterwegs. Man sieht sie oft bei Veranstaltungen von Sasha Tease Events oder im DollHaus (Kitchener-Waterloo/Guelph). Sie stand bereits mit Lady Boom Boom, Adriana The Bombshell, Karamilk und Sasha Baga auf der Bühne.
+                    </p>
                 </div>
             </div>
         </div>
@@ -287,24 +245,23 @@
     <!-- MEDIA SECTION -->
     <section id="media" class="py-32 bg-black">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-6xl md:text-8xl font-black italic mb-20 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-pink-400 to-yellow-400 uppercase tracking-tighter reveal" x-text="content[lang].nav[2]"></h2>
+            <h2 class="text-5xl md:text-7xl font-black italic mb-20 pink-to-yellow-text uppercase tracking-tighter reveal" x-text="content[lang].nav[2]"></h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
                 <template x-for="img in ['AnimePink.png', 'YellowMoney.png', 'YellowWithBackground.jpg']">
-                    <div class="reveal group relative aspect-[3/4] overflow-hidden rounded-[2rem] glass cursor-pointer hover:border-pink-500 transition-colors" @click="selectedMedia = img">
-                        <img :src="img" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
-                        <div class="absolute inset-0 bg-gradient-to-t from-pink-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-8">
-                            <i data-lucide="maximize-2" class="text-white w-6 h-6"></i>
+                    <div class="reveal group relative aspect-[3/4] overflow-hidden rounded-[2rem] glass cursor-pointer" @click="selectedMedia = img">
+                        <img :src="img" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pink-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end justify-center pb-8">
+                            <span class="text-[10px] font-bold tracking-[0.5em] uppercase">Zoom</span>
                         </div>
                     </div>
                 </template>
             </div>
 
-            <!-- YouTube Feed -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
-                <template x-for="video in [{id: 'v4vz_p3_7JY'}, {id: 'MxGPhV3bwsw'}, {id: 'WY4wwPZHfzY'}, {id: 'MK9_H8JESpY'}, {id: '2yX1M-K1q7I'}, {id: '5A5kSt0GU2Y'}]">
-                    <div class="rounded-3xl overflow-hidden border border-white/10 aspect-video group">
-                        <iframe class="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity" :src="'https://www.youtube.com/embed/' + video.id" frameborder="0"></iframe>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+                <template x-for="video in [{id: 'v4vz_p3_7JY'}, {id: 'MxGPhV3bwsw'}, {id: 'WY4wwPZHfzY'}]">
+                    <div class="rounded-2xl overflow-hidden border border-white/10 aspect-video group shadow-xl">
+                        <iframe class="w-full h-full opacity-70 group-hover:opacity-100 transition-opacity" :src="'https://www.youtube.com/embed/' + video.id" frameborder="0"></iframe>
                     </div>
                 </template>
             </div>
@@ -314,20 +271,9 @@
     <!-- SHOWS SECTION -->
     <section id="shows" class="py-32 bg-neutral-950">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-5xl md:text-8xl font-black mb-16 uppercase italic tracking-tighter reveal pink-glow" x-text="content[lang].shows.title"></h2>
-            <div class="max-w-5xl mx-auto rounded-[3rem] overflow-hidden border border-white/5 shadow-2xl glass p-4 reveal">
+            <h2 class="text-5xl md:text-7xl font-black mb-16 uppercase italic tracking-tighter reveal pink-to-yellow-text" x-text="content[lang].shows.title"></h2>
+            <div class="max-w-5xl mx-auto rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl glass p-2 reveal">
                 <iframe src="https://calendar.google.com/calendar/embed?src=d58d535c23f8cb4469d70bae6bed31e53b7e40ce2a4b1cb85c99ba492a334b97@group.calendar.google.com&ctz=America%2FToronto" style="border: 0" width="100%" height="600" class="filter invert hue-rotate-[280deg] brightness-[0.7]"></iframe>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS / QUOTES -->
-    <section class="py-32 bg-pink-600/5">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center italic reveal">
-                <i data-lucide="quote" class="text-pink-500 w-12 h-12 mx-auto mb-8 opacity-30"></i>
-                <p class="text-2xl md:text-3xl font-light mb-8">"Axelle Wolfe doesn't just perform; she commands the room with a precision that is rare for such a young artist. A true visionary."</p>
-                <div class="text-sm font-black uppercase tracking-widest text-yellow-400">— Peaches Von Titties</div>
             </div>
         </div>
     </section>
@@ -335,13 +281,12 @@
     <!-- BOOKING SECTION -->
     <section id="booking" class="py-32 px-6 bg-black">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-6xl md:text-9xl font-black mb-6 italic tracking-tighter reveal text-pink-500" x-text="content[lang].booking.title"></h2>
-            <p class="text-yellow-400 font-black tracking-[0.4em] uppercase text-xs mb-16 reveal" x-text="content[lang].booking.subtitle"></p>
+            <h2 class="text-6xl md:text-8xl font-black mb-4 italic tracking-tighter reveal text-pink-500 uppercase" x-text="content[lang].booking.title"></h2>
+            <p class="text-yellow-400 font-bold tracking-[0.4em] uppercase text-[10px] mb-16 reveal" x-text="content[lang].booking.subtitle"></p>
             
-            <div class="glass p-8 md:p-16 rounded-[4rem] reveal">
-                <div x-show="formSubmitted" x-cloak class="py-12 animate-pulse">
-                    <i data-lucide="check" class="mx-auto mb-4 text-green-400" size="48"></i>
-                    <h4 class="text-2xl font-black uppercase" x-text="content[lang].booking.thanks"></h4>
+            <div class="glass p-8 md:p-16 rounded-[3rem] reveal border border-white/5">
+                <div x-show="formSubmitted" x-cloak class="py-12">
+                    <h4 class="text-2xl font-black uppercase text-pink-500" x-text="content[lang].booking.thanks"></h4>
                 </div>
                 
                 <form x-show="!formSubmitted" action="https://formspree.io/f/xwvazepz" method="POST" @submit.prevent="formSubmitted = true; $el.submit()" class="space-y-6">
@@ -360,33 +305,32 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-20 bg-neutral-950 border-t border-white/5 text-center">
-        <div class="flex justify-center gap-12 mb-12 opacity-30">
+    <footer class="py-16 bg-neutral-950 border-t border-white/5 text-center">
+        <div class="flex justify-center gap-8 mb-8 opacity-40">
             <a href="https://instagram.com/axellewolfe" class="hover:text-pink-500 transition-colors"><i data-lucide="instagram"></i></a>
-            <a href="#" class="hover:text-pink-500 transition-colors"><i data-lucide="facebook"></i></a>
-            <a href="#" class="hover:text-pink-500 transition-colors"><i data-lucide="youtube"></i></a>
+            <a href="https://www.youtube.com/@AxelleWolfe" class="hover:text-pink-500 transition-colors"><i data-lucide="youtube"></i></a>
         </div>
         <p class="text-[10px] font-black opacity-20 tracking-[1em] uppercase">
-            © 2026 AXELLE WOLFE | THE ELECTRIC AGE
+            © 2026 AXELLE WOLFE
         </p>
     </footer>
 
     <!-- LIGHTBOX -->
     <div x-show="selectedMedia" x-cloak class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 backdrop-blur-3xl" @click="selectedMedia = null">
         <button class="absolute top-8 right-8 text-pink-500 scale-150"><i data-lucide="x"></i></button>
-        <img :src="selectedMedia" class="max-h-[90vh] max-w-full rounded-2xl object-contain border border-white/10 shadow-2xl">
+        <img :src="selectedMedia" class="max-h-[90vh] max-w-full rounded-2xl object-contain border border-white/10">
     </div>
 
     <!-- QUICK BOOKING MODAL -->
     <div x-show="isBookingOpen" x-cloak class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6 backdrop-blur-xl" @click.self="isBookingOpen = false">
-        <div class="glass p-12 rounded-[4rem] max-w-lg w-full relative shadow-3xl">
+        <div class="glass p-12 rounded-[3rem] max-w-lg w-full relative">
             <button @click="isBookingOpen = false" class="absolute top-10 right-10 text-pink-500"><i data-lucide="x"></i></button>
-            <h3 class="text-4xl font-black italic uppercase text-pink-500 mb-8" x-text="content[lang].booking.title"></h3>
+            <h3 class="text-3xl font-black italic uppercase pink-to-yellow-text mb-8" x-text="content[lang].booking.title"></h3>
             <form action="https://formspree.io/f/xwvazepz" method="POST" @submit.prevent="isBookingOpen = false; formSubmitted = true; $el.submit()" class="space-y-4">
                 <input name="name" required type="text" :placeholder="content[lang].booking.formName" class="w-full bg-white/5 p-5 rounded-xl border border-white/10">
                 <input name="email" required type="email" :placeholder="content[lang].booking.formEmail" class="w-full bg-white/5 p-5 rounded-xl border border-white/10">
                 <textarea name="message" required :placeholder="content[lang].booking.formDetails" class="w-full bg-white/5 p-5 rounded-xl border border-white/10 h-32"></textarea>
-                <button type="submit" class="w-full bg-pink-600 py-5 font-black uppercase tracking-widest hover:bg-yellow-400 hover:text-black transition-all rounded-xl">
+                <button type="submit" class="w-full bg-pink-600 py-5 font-black uppercase tracking-widest hover:bg-yellow-400 hover:text-black transition-all rounded-xl shadow-lg">
                     <span x-text="content[lang].booking.formSend"></span>
                 </button>
             </form>
