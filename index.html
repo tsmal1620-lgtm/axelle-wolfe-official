@@ -110,6 +110,11 @@
 #home, #about, #media, #shows, #booking {
     scroll-margin-top: 120px;
 }
+        /* SAFARI IFRAME FIX */
+iframe {
+    max-width: 100%;
+    display: block;
+}
     </style>
 </head>
 
@@ -275,15 +280,16 @@
 
  <!-- Featured Instagram Reel -->
 
-            <div class="max-w-md mx-auto mb-16 rounded-3xl overflow-hidden border border-white/10 bg-neutral-900 aspect-[9/16] shadow-2xl">
-                <iframe 
-                    class="w-full h-full"
-                    src="https://www.instagram.com/reel/DL7hU2CMYdf/embed" 
-                    frameborder="0" 
-                    scrolling="no" 
-                    allowtransparency="true">
-                </iframe>
-            </div>
+            <div class="max-w-md mx-auto mb-16 rounded-3xl overflow-hidden border border-white/10 bg-neutral-900 shadow-2xl">
+    <div style="position:relative; padding-top:177.77%;">
+        <iframe 
+            src="https://www.instagram.com/reel/DL7hU2CMYdf/embed" 
+            style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+            scrolling="no"
+            allowtransparency="true">
+        </iframe>
+    </div>
+</div>
 
             
         <!-- Gallery Grid -->
@@ -366,7 +372,7 @@
                         </iframe>
                 </div>
             </div>
-    </section>
+    
 
     <!-- New Video: Axelle Wolfe Performance -->
         <div class="flex flex-col items-center">
@@ -388,7 +394,7 @@
             </p>
         </div>
     </div>
-
+</section>
     <!-- TESTIMONIAL / QUOTE -->
 <div class="container mx-auto px-6 py-24 reveal">
     <div class="max-w-4xl mx-auto glass p-12 rounded-[3rem] text-center border-l-4 border-pink-500">
