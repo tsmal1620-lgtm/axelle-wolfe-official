@@ -142,7 +142,8 @@ iframe {
     <div id="cursor" x-ref="cursor" class="hidden lg:block"></div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 transition-all duration-300" :class="scrolled ? 'bg-black/90 backdrop-blur-md py-3 border-b border-pink-500/20' : 'bg-transparent py-6'">
+    <nav class="fixed w-full z-50 transition-all duration-300" 
+        :class="scrolled ? 'bg-black/90 backdrop-blur-md py-3 border-b border-pink-500/20' : 'bg-transparent py-6'">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer group" @click="window.scrollTo(0,0)">
                 <span class="text-2xl font-black tracking-tighter italic uppercase pink-to-yellow-text">AXELLE WOLFE</span>
@@ -170,9 +171,13 @@ iframe {
         </div>
     </nav>
 
-<!-- ✅ MOBILE MENU (PASTE THIS RIGHT HERE) -->
-<div x-show="isMenuOpen" x-transition
-     class="md:hidden fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-xl">
+         <!-- MOBILE MENU -->
+              <div 
+                  x-show="isMenuOpen" 
+                  x-transition
+                  @click.self="isMenuOpen = false"
+                  class="md:hidden fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-xl"
+>
 
     <!-- Navigation -->
     <template x-for="(item, index) in content[lang].nav">
