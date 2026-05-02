@@ -178,7 +178,10 @@ iframe {
                   @click.self="isMenuOpen = false"
                   class="md:hidden fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-xl"
 >
-
+    
+              <div class="flex flex-col items-center gap-8 text-xl">
+             <!-- ALL YOUR MENU CONTENT HERE -->
+        
     <!-- Navigation -->
     <template x-for="(item, index) in content[lang].nav">
         <a 
