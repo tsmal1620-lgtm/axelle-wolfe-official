@@ -171,33 +171,41 @@ iframe {
         </div>
     </nav>
 
-         <!-- MOBILE MENU -->
-              <div 
-                  x-show="isMenuOpen" 
-                  x-transition
-                  @click.self="isMenuOpen = false"
-                  class="md:hidden fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-xl"
+        <!-- MOBILE MENU -->
+<div 
+    x-show="isMenuOpen" 
+    x-transition
+    @click.self="isMenuOpen = false"
+    class="md:hidden fixed inset-0 bg-black/95 z-40 flex items-center justify-center"
 >
     
-              <div class="flex flex-col items-center gap-8 text-xl">
-             <!-- ALL YOUR MENU CONTENT HERE -->
+    <!-- MENU CONTENT (clicking here will NOT close it) -->
+    <div class="flex flex-col items-center justify-center gap-8 text-xl">
         
-    <!-- Navigation -->
-    <template x-for="(item, index) in content[lang].nav">
-        <a 
-          @click="isMenuOpen = false"
-          :href="'#' + ['home','about','media','shows','booking'][index]"
-          class="uppercase tracking-widest text-white hover:text-pink-500"
-          x-text="item">
-        </a>
-    </template>
+        <!-- Navigation -->
+        <template x-for="(item, index) in content[lang].nav">
+            <a 
+              @click="isMenuOpen = false"
+              :href="'#' + ['home','about','media','shows','booking'][index]"
+              class="uppercase tracking-widest text-white hover:text-pink-500"
+              x-text="item">
+            </a>
+        </template>
 
-    <!-- Language Switch -->
-    <div class="flex gap-4 mt-8">
-        <button @click="lang='EN'" :class="lang==='EN' ? 'bg-pink-500 text-white' : 'border'" class="px-4 py-2">EN</button>
-        <button @click="lang='FR'" :class="lang==='FR' ? 'bg-pink-500 text-white' : 'border'" class="px-4 py-2">FR</button>
-        <button @click="lang='DE'" :class="lang==='DE' ? 'bg-pink-500 text-white' : 'border'" class="px-4 py-2">DE</button>
+        <!-- Language Switch -->
+        <div class="flex gap-4 mt-8">
+            <button @click="lang='EN'" class="px-4 py-2">EN</button>
+            <button @click="lang='FR'" class="px-4 py-2">FR</button>
+            <button @click="lang='DE'" class="px-4 py-2">DE</button>
+        </div>
+
+        <!-- Close Button (optional, you can even remove this if you want) -->
+        <button @click="isMenuOpen = false" class="text-pink-500 text-3xl mt-6">
+            ✕
+        </button>
+
     </div>
+</div>
 
     <!-- Close -->
     <button @click="isMenuOpen = false" class="absolute top-6 right-6 text-pink-500 text-3xl">
