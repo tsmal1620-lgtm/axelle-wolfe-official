@@ -81,9 +81,10 @@
         body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
         .font-cursive { font-family: 'Dancing Script', cursive; }
         
-       .reveal {
+  .reveal {
     opacity: 1;
     transform: none;
+    transition: all 0.8s ease-out;
 }
 
 @media (min-width: 768px) {
@@ -91,7 +92,12 @@
         opacity: 0;
         transform: translateY(30px);
     }
-}; transition: all 0.8s ease-out; }
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .pink-to-yellow-text {
@@ -444,7 +450,7 @@ iframe {
                     <h4 class="text-2xl font-black uppercase text-pink-500" x-text="content[lang].booking.thanks"></h4>
                 </div>
                 
-                <form x-show="!formSubmitted" x-cloak="false" action="https://formspree.io/f/xwvazepz" method="POST" @submit.prevent="formSubmitted = true; $el.submit()" class="space-y-6">
+                <form x-show="!formSubmitted" action="https://formspree.io/f/xwvazepz" method="POST" @submit.prevent="formSubmitted = true; $el.submit()" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <input name="name" required type="text" :placeholder="content[lang].booking.formName" class="w-full bg-white/5 p-6 rounded-2xl border border-white/10 focus:border-pink-500 outline-none transition-all">
                         <input name="email" required type="email" :placeholder="content[lang].booking.formEmail" class="w-full bg-white/5 p-6 rounded-2xl border border-white/10 focus:border-pink-500 outline-none transition-all">
