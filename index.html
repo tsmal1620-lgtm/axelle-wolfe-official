@@ -71,15 +71,27 @@
     <title>Axelle Wolfe | Official Site</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Space+Grotesk:wght@300;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         [x-cloak] { display: none !important; }
+        [x-cloak=""] { display: none !important; }
+        [x-cloak].force-show { display: block !important; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
         .font-cursive { font-family: 'Dancing Script', cursive; }
         
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+       .reveal {
+    opacity: 1;
+    transform: none;
+}
+
+@media (min-width: 768px) {
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+}; transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .pink-to-yellow-text {
@@ -153,7 +165,7 @@ iframe {
     </nav>
 
 <!-- ✅ MOBILE MENU (PASTE THIS RIGHT HERE) -->
-<div x-show="isMenuOpen" x-cloak x-transition
+<div x-show="isMenuOpen" x-transition
      class="md:hidden fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-xl">
 
     <!-- Navigation -->
@@ -191,7 +203,7 @@ iframe {
             <div class="flex flex-col md:flex-row items-center justify-center gap-6">
                 <button @click="isBookingOpen = true" 
                         class="group relative px-12 py-5 bg-pink-600 text-white font-black tracking-widest text-lg transition-all hover:scale-105 shadow-[0_0_40px_rgba(236,72,153,0.3)]">
-                    <span class="relative z-10" x-text="content[lang].hero.cta"></span>
+                    <span class="relative z-10" x-text="content[lang].hero.cta">BOOK NOW</span>
                     <div class="absolute inset-0 bg-yellow-400 translate-x-2 translate-y-2 -z-10 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></div>
                 </button>
             </div>
@@ -432,7 +444,7 @@ iframe {
                     <h4 class="text-2xl font-black uppercase text-pink-500" x-text="content[lang].booking.thanks"></h4>
                 </div>
                 
-                <form x-show="!formSubmitted" action="https://formspree.io/f/xwvazepz" method="POST" @submit.prevent="formSubmitted = true; $el.submit()" class="space-y-6">
+                <form x-show="!formSubmitted" x-cloak="false" action="https://formspree.io/f/xwvazepz" method="POST" @submit.prevent="formSubmitted = true; $el.submit()" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <input name="name" required type="text" :placeholder="content[lang].booking.formName" class="w-full bg-white/5 p-6 rounded-2xl border border-white/10 focus:border-pink-500 outline-none transition-all">
                         <input name="email" required type="email" :placeholder="content[lang].booking.formEmail" class="w-full bg-white/5 p-6 rounded-2xl border border-white/10 focus:border-pink-500 outline-none transition-all">
@@ -480,16 +492,23 @@ iframe {
         </div>
     </div>
 
-    <script>
-        lucide.createIcons();
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
+        <script>
+            // Alpine init check (Safari fix)
+            document.addEventListener('alpine:init', () => {
+                 console.log('Alpine initialized');
             });
-        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
+            lucide.createIcons();
+    
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.add('active');
+                  }
+              });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+         </script>
 </body>
 </html>
